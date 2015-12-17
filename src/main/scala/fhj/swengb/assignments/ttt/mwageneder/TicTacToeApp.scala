@@ -157,6 +157,3 @@ class TicTacToeAppController extends Initializable {
     }
   }
 }
-
-
-// WAS SOLL DAS WIESO PUSHT DU DAS NICHT ! ? aaaaaahhh
