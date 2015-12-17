@@ -130,7 +130,7 @@ class TicTacToeAppController extends Initializable {
           topleft.setText(null)
           topcenter.setText(null)
           topright.setText(null)
-          msglabel.setText("New Game started")
+          msglabel.setText("[New Game started]")
         }
 
         case _ => assert(false)
@@ -143,7 +143,7 @@ class TicTacToeAppController extends Initializable {
     if (newGame.gameOver){
 
       if(!newGame.checkIfWon(PlayerA) && !newGame.checkIfWon(PlayerB)) {
-        msglabel.setText("Draw!")
+        msglabel.setText("Draw! --> to play again press the Button")
         gridpane.setDisable(true)
       }
       else if(newGame.winner.get._1.equals(PlayerA)) {
