@@ -22,6 +22,8 @@ object TicTacToeApp {
 class TicTacToeApp extends javafx.application.Application {
 
   val Fxml = "/fhj/swengb/assignments/ttt/TicTacToeApp.fxml"
+  val Css = "/fhj/swengb/assignments/ttt/TicTacToeApp.css"
+
 
   val loader = new FXMLLoader(getClass.getResource(Fxml))
 
@@ -30,6 +32,7 @@ class TicTacToeApp extends javafx.application.Application {
     loader.load[Parent]() // side effect
     val scene = new Scene(loader.getRoot[Parent])
     stage.setScene(scene)
+    stage.setResizable(false)
     stage.show()
 
   } catch {
@@ -92,8 +95,7 @@ class TicTacToeAppController extends Initializable {
       event.getSource match {
         case onclick: Label => {
 
-          if (newGame.gameOver)
-            gameOver()
+          if (newGame.gameOver) gameOver()
 
           if (newGame.nextPlayer == PlayerA) {
             val a = labelmoveMap.get(onclick.getUserData.toString.toInt)
@@ -107,11 +109,12 @@ class TicTacToeAppController extends Initializable {
 
           else if (newGame.nextPlayer == PlayerB) {
 
-            if(newGame.remainingMoves.contains(labelmoveMap(onclick.getUserData.toString.toInt)._2)){
-              onclick.setText("o")
-              newGame = newGame.turn(labelmoveMap(onclick.getUserData.toString.toInt)._2,newGame.nextPlayer)
-              gameOver()
+            val b = labelmoveMap(onclick.getUserData.toString.toInt)
 
+            if(newGame.remainingMoves.contains(b._2)){
+              onclick.setText("o")
+              newGame = newGame.turn(b._2,newGame.nextPlayer)
+              gameOver()
             }
           }
         }

@@ -113,8 +113,8 @@ object TicTacToe {
   * The nextplayer parameter defines which player makes the next move.
   */
 
-case class TicTacToe(moveHistory: Map[TMove, Player],
-                     nextPlayer: Player = PlayerA) {
+case class TicTacToe (moveHistory: Map[TMove, Player],
+                      nextPlayer: Player = PlayerA) {
 
   /**
     * outputs a representation of the tic tac toe like this:
