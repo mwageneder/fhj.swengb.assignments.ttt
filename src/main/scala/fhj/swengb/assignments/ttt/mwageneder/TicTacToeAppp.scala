@@ -13,17 +13,16 @@ import javafx.stage.Stage
 
 import scala.util.control.NonFatal
 
-object TicTacToeApp {
+
+object TicTacToeAppp {
   def main(args: Array[String]) {
-    Application.launch(classOf[TicTacToeApp], args: _*)
+    Application.launch(classOf[TicTacToeAppp], args: _*)
   }
 }
 
-class TicTacToeApp extends javafx.application.Application {
+class TicTacToeAppp extends javafx.application.Application {
 
   val Fxml = "/fhj/swengb/assignments/ttt/TicTacToeApp.fxml"
-  val Css = "/fhj/swengb/assignments/ttt/TicTacToeApp.css"
-
 
   val loader = new FXMLLoader(getClass.getResource(Fxml))
 
@@ -32,9 +31,7 @@ class TicTacToeApp extends javafx.application.Application {
     loader.load[Parent]() // side effect
     val scene = new Scene(loader.getRoot[Parent])
     stage.setScene(scene)
-    stage.setResizable(false)
     stage.show()
-
   } catch {
     case NonFatal(e) => {
       e.printStackTrace()
@@ -42,9 +39,10 @@ class TicTacToeApp extends javafx.application.Application {
   }
 }
 
+
 class TicTacToeAppController extends Initializable {
 
-  @FXML var gridpane : GridPane = _
+  @FXML var gridpane: GridPane = _
 
   @FXML var topleft: Label = _
   @FXML var topcenter: Label = _
@@ -62,15 +60,24 @@ class TicTacToeAppController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    topleft.setOnMouseClicked(mouseEventHandler) ; topleft.setUserData(0)
-    topcenter.setOnMouseClicked(mouseEventHandler); topcenter.setUserData(1)
-    topright.setOnMouseClicked(mouseEventHandler); topright.setUserData(2)
-    middleleft.setOnMouseClicked(mouseEventHandler); middleleft.setUserData(3)
-    middlecenter.setOnMouseClicked(mouseEventHandler); middlecenter.setUserData(4)
-    middleright.setOnMouseClicked(mouseEventHandler) ; middleright.setUserData(5)
-    bottomleft.setOnMouseClicked(mouseEventHandler) ; bottomleft.setUserData(6)
-    bottomcenter.setOnMouseClicked(mouseEventHandler) ; bottomcenter.setUserData(7)
-    bottomright.setOnMouseClicked(mouseEventHandler) ;  bottomright.setUserData(8)
+    topleft.setOnMouseClicked(mouseEventHandler);
+    topleft.setUserData(0)
+    topcenter.setOnMouseClicked(mouseEventHandler);
+    topcenter.setUserData(1)
+    topright.setOnMouseClicked(mouseEventHandler);
+    topright.setUserData(2)
+    middleleft.setOnMouseClicked(mouseEventHandler);
+    middleleft.setUserData(3)
+    middlecenter.setOnMouseClicked(mouseEventHandler);
+    middlecenter.setUserData(4)
+    middleright.setOnMouseClicked(mouseEventHandler);
+    middleright.setUserData(5)
+    bottomleft.setOnMouseClicked(mouseEventHandler);
+    bottomleft.setUserData(6)
+    bottomcenter.setOnMouseClicked(mouseEventHandler);
+    bottomcenter.setUserData(7)
+    bottomright.setOnMouseClicked(mouseEventHandler);
+    bottomright.setUserData(8)
 
     gridpane.setDisable(true)
     btnnewgame.setOnMouseClicked(mouseEventHandler)
@@ -79,15 +86,15 @@ class TicTacToeAppController extends Initializable {
 
   var newGame = TicTacToe.apply()
 
-  val labelmoveMap: Map[Int, (Label, TMove)] = Map( 0 -> (topleft,TopLeft),
-                                                    1 -> (topcenter,TopCenter),
-                                                    2 -> (topright,TopRight),
-                                                    3 -> (middleleft,MiddleLeft),
-                                                    4 -> (middlecenter,MiddleCenter),
-                                                    5 -> (middleright,MiddleRight),
-                                                    6 -> (bottomleft,BottomLeft),
-                                                    7 -> (bottomcenter,BottomCenter),
-                                                    8 -> (bottomright,BottomRight))
+  val labelmoveMap: Map[Int, (Label, TMove)] = Map(0 ->(topleft, TopLeft),
+    1 ->(topcenter, TopCenter),
+    2 ->(topright, TopRight),
+    3 ->(middleleft, MiddleLeft),
+    4 ->(middlecenter, MiddleCenter),
+    5 ->(middleright, MiddleRight),
+    6 ->(bottomleft, BottomLeft),
+    7 ->(bottomcenter, BottomCenter),
+    8 ->(bottomright, BottomRight))
 
   val mouseEventHandler: EventHandler[_ >: MouseEvent] = new EventHandler[MouseEvent] {
 
@@ -100,9 +107,9 @@ class TicTacToeAppController extends Initializable {
           if (newGame.nextPlayer == PlayerA) {
             val a = labelmoveMap.get(onclick.getUserData.toString.toInt)
 
-            if(newGame.remainingMoves.contains(a.get._2)){
+            if (newGame.remainingMoves.contains(a.get._2)) {
               onclick.setText("x")
-              newGame = newGame.turn(a.get._2,newGame.nextPlayer)
+              newGame = newGame.turn(a.get._2, newGame.nextPlayer)
               gameOver()
             }
           }
@@ -111,9 +118,9 @@ class TicTacToeAppController extends Initializable {
 
             val b = labelmoveMap(onclick.getUserData.toString.toInt)
 
-            if(newGame.remainingMoves.contains(b._2)){
+            if (newGame.remainingMoves.contains(b._2)) {
               onclick.setText("o")
-              newGame = newGame.turn(b._2,newGame.nextPlayer)
+              newGame = newGame.turn(b._2, newGame.nextPlayer)
               gameOver()
             }
           }
@@ -143,17 +150,17 @@ class TicTacToeAppController extends Initializable {
 
   def gameOver(): Unit = {
 
-    if (newGame.gameOver){
+    if (newGame.gameOver) {
 
-      if(!newGame.checkIfWon(PlayerA) && !newGame.checkIfWon(PlayerB)) {
+      if (!newGame.checkIfWon(PlayerA) && !newGame.checkIfWon(PlayerB)) {
         msglabel.setText("Draw! --> to play again press the Button")
         gridpane.setDisable(true)
       }
-      else if(newGame.winner.get._1.equals(PlayerA)) {
+      else if (newGame.winner.get._1.equals(PlayerA)) {
         msglabel.setText("X - Player 1 won!")
         gridpane.setDisable(true)
       }
-      else if(newGame.winner.get._1.equals(PlayerB)) {
+      else if (newGame.winner.get._1.equals(PlayerB)) {
         msglabel.setText("O - Player 2 won!")
         gridpane.setDisable(true)
       }

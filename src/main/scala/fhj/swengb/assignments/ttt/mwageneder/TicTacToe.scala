@@ -1,9 +1,10 @@
 package fhj.swengb.assignments.ttt.mwageneder
 
+import scala.Predef
 import scala.collection.Set
 
 /**
-  * models the different moves the game allows
+  * models the vdifferent moves the game allows
   *
   * each move is made by either player a or player b.
   */
@@ -117,35 +118,35 @@ case class TicTacToe (moveHistory: Map[TMove, Player],
                       nextPlayer: Player = PlayerA) {
 
   /**
-    * outputs a representation of the tic tac toe like this:
-    *
-    * |---|---|---|
-    * | x | o | x |
-    * |---|---|---|
-    * | o | x | x |
-    * |---|---|---|
-    * | x | o | o |
-    * |---|---|---|
-    *
-    *
-    * @return
-    */
+   * outputs a representation of the tic tac toe like this:
+   *
+   * |---|---|---|
+   * | x | o | x |
+   * |---|---|---|
+   * | o | x | x |
+   * |---|---|---|
+   * | x | o | o |
+   * |---|---|---|
+   *
+   *
+   * @return
+   */
 
   def asString(): String = {
 
 
-    val indexMap = Map(0->16, 1->20, 2->24, 3->44, 4->48, 5->52, 6->72, 7->76, 8->80)
+    val indexMap = Map(0 -> 16, 1 -> 20, 2 -> 24, 3 -> 44, 4 -> 48, 5 -> 52, 6 -> 72, 7 -> 76, 8 -> 80)
 
 
     var field: String = "|---|---|---|\n" +
-                        "|   |   |   |\n" +
-                        "|---|---|---|\n" +
-                        "|   |   |   |\n" +
-                        "|---|---|---|\n" +
-                        "|   |   |   |\n" +
-                        "|---|---|---|\n"
+      "|   |   |   |\n" +
+      "|---|---|---|\n" +
+      "|   |   |   |\n" +
+      "|---|---|---|\n" +
+      "|   |   |   |\n" +
+      "|---|---|---|\n"
 
-    val pos = Map(0->16, 1->20, 2->24, 3->44, 4->48, 5->52, 6->72, 7->76, 8->80)
+    val pos = Map(0 -> 16, 1 -> 20, 2 -> 24, 3 -> 44, 4 -> 48, 5 -> 52, 6 -> 72, 7 -> 76, 8 -> 80)
 
 
     for ((a, b) <- moveHistory) {
@@ -164,32 +165,32 @@ case class TicTacToe (moveHistory: Map[TMove, Player],
 
 
   val winnings: List[Set[TMove]] = List(Set(TopLeft, TopCenter, TopRight),
-                                        Set(MiddleLeft, MiddleCenter, MiddleRight),
-                                        Set(BottomLeft, BottomCenter, BottomRight),
-                                        Set(TopLeft, MiddleCenter, BottomRight),
-                                        Set(TopRight, MiddleCenter, BottomLeft),
-                                        Set(TopCenter, MiddleCenter, BottomCenter),
-                                        Set(TopLeft, MiddleLeft, BottomLeft),
-                                        Set(TopRight, MiddleRight, BottomRight))
+    Set(MiddleLeft, MiddleCenter, MiddleRight),
+    Set(BottomLeft, BottomCenter, BottomRight),
+    Set(TopLeft, MiddleCenter, BottomRight),
+    Set(TopRight, MiddleCenter, BottomLeft),
+    Set(TopCenter, MiddleCenter, BottomCenter),
+    Set(TopLeft, MiddleLeft, BottomLeft),
+    Set(TopRight, MiddleRight, BottomRight))
 
 
   def checkIfWon(player: Player): Boolean = {
 
-    if(winnings.head.subsetOf(moveHistory.filter(_._2 == player).keySet))
+    if (winnings.head.subsetOf(moveHistory.filter(_._2 == player).keySet))
       true
-    else if(winnings(1).subsetOf(moveHistory.filter(_._2 == player).keySet))
+    else if (winnings(1).subsetOf(moveHistory.filter(_._2 == player).keySet))
       true
-    else if(winnings(2).subsetOf(moveHistory.filter(_._2 == player).keySet))
+    else if (winnings(2).subsetOf(moveHistory.filter(_._2 == player).keySet))
       true
-    else if(winnings(3).subsetOf(moveHistory.filter(_._2 == player).keySet))
+    else if (winnings(3).subsetOf(moveHistory.filter(_._2 == player).keySet))
       true
-    else if(winnings(4).subsetOf(moveHistory.filter(_._2 == player).keySet))
+    else if (winnings(4).subsetOf(moveHistory.filter(_._2 == player).keySet))
       true
-    else if(winnings(5).subsetOf(moveHistory.filter(_._2 == player).keySet))
+    else if (winnings(5).subsetOf(moveHistory.filter(_._2 == player).keySet))
       true
-    else if(winnings(6).subsetOf(moveHistory.filter(_._2 == player).keySet))
+    else if (winnings(6).subsetOf(moveHistory.filter(_._2 == player).keySet))
       true
-    else if(winnings(7).subsetOf(moveHistory.filter(_._2 == player).keySet))
+    else if (winnings(7).subsetOf(moveHistory.filter(_._2 == player).keySet))
       true
     else
       false
@@ -212,10 +213,10 @@ case class TicTacToe (moveHistory: Map[TMove, Player],
   }
 
   /**
-    * given a tic tac toe game, this function returns all
-    * games which can be derived by making the next turn. that means one of the
-    * possible turns is taken and added to the set.
-    */
+   * given a tic tac toe game, this function returns all
+   * games which can be derived by making the next turn. that means one of the
+   * possible turns is taken and added to the set.
+   */
 
   lazy val nextGames: Set[TicTacToe] = {
 
@@ -224,30 +225,31 @@ case class TicTacToe (moveHistory: Map[TMove, Player],
   }
 
   /**
-    * Either there is no winner, or PlayerA or PlayerB won the game.
-    *
-    * The set of moves contains all moves which contributed to the result.
-    */
+   * Either there is no winner, or PlayerA or PlayerB won the game.
+   *
+   * The set of moves contains all moves which contributed to the result.
+   */
 
   def winner: Option[(Player, Set[TMove])] = {
 
-    if(checkIfWon(PlayerA))
-      Some(PlayerA,moveHistory.filter(_._2 == PlayerA).keySet)
-    else if(checkIfWon(PlayerB))
-      Some(PlayerB,moveHistory.filter(_._2 == PlayerB).keySet)
+    if (checkIfWon(PlayerA))
+      Some(PlayerA, moveHistory.filter(_._2 == PlayerA).keySet)
+    else if (checkIfWon(PlayerB))
+      Some(PlayerB, moveHistory.filter(_._2 == PlayerB).keySet)
     else None
   }
 
-  def turn(p: TMove, player: Player): TicTacToe = {
-    if(!moveHistory.contains(p)){
-      if(player.equals(PlayerA))
-        TicTacToe(moveHistory + (p -> player), PlayerB)
+  def turn(move: TMove, player: Player): TicTacToe = {
+
+    if (!moveHistory.contains(move)) {
+      if (player.equals(PlayerA))
+        TicTacToe(moveHistory + (move -> player), PlayerB)
       else
-        TicTacToe(moveHistory + (p -> player))
+        TicTacToe(moveHistory + (move -> player))
     }
     else
       TicTacToe(moveHistory)
   }
+
+
 }
-
-
